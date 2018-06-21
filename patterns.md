@@ -4,9 +4,9 @@ Python Design Patterns
 
 > "Design patterns help you learn from others’ successes instead of your own failures"
 
-断断续续读了好久设计模式，记录此篇总结。设计模式最初发源于C++/Java等静态语言，Python语言本身的很多特性已经覆盖了设计模式，甚至用了都不知道，比如：decorator/metaclass/getattr等。但是写稍微大型的项目时，还是经常力不从心。就如上面引用的那句话，通过设计模式可以学习前人的智慧，写出更好的代码。
+断断续续读了好久设计模式，记录此篇总结。设计模式最初发源于C++/Java等静态语言，Python语言本身的很多特性已经覆盖了设计模式，甚至用了都不知道，比如：decorator/metaclass/generator/getattr等。但是写稍微大型的项目时，还是经常力不从心。就如上面引用的那句话，通过设计模式可以学习前人的智慧，写出更好的代码。
 
-所有代码都在python3环境下可以跑通，请跑起来玩玩。代码仅限演示作用，更清晰地用python语法展示pattern，而不是完备性，请勿用在生产环境。
+所有代码都在python3环境下可以跑通，请跑起来玩玩。代码仅限演示作用，更注重清晰地用python语法展示pattern，而不是完备性，请勿用在生产环境。
 
 ## 设计模式六大原则
 
@@ -33,7 +33,7 @@ Python Design Patterns
     * 尽量在不修改源代码的情况下进行扩展
 
 
-> http://www.uml.org.cn/sjms/201211023.asp
+> 扩展阅读：http://www.uml.org.cn/sjms/201211023.asp
 
 
 ## 常用设计模式
@@ -74,9 +74,7 @@ if __name__ == '__main__':
     assert u is u2
 ```
 
-这个例子用MetaClass实现，其实Python里还有其他实现方式。但是Python里的MetaClass就是用来实例化Class的，用来实现单例的类正好。
-
-
+这个例子用MetaClass实现，其实Python里还有其他实现方式。但是Python里的MetaClass就是用来实例化Class的，用来实现单例类正好。
 
 
 #### Factory
@@ -521,5 +519,4 @@ if __name__ == '__main__':
 *   [python-patterns](https://github.com/faif/python-patterns)
 *   [python-3-patterns-idioms](http://python-3-patterns-idioms-test.readthedocs.io/en/latest/index.html)
 *   [设计模式六大原则](http://www.uml.org.cn/sjms/201211023.asp)
-
-
+*	[设计模式一句话总结](https://zhuanlan.zhihu.com/p/28737945)
