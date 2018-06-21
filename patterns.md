@@ -10,6 +10,7 @@ Python Design Patterns
 
 ## 设计模式六大原则
 
+
 1. 单一职责原则
     * 一个类只做一件事情，模块化
 
@@ -33,7 +34,7 @@ Python Design Patterns
     * 尽量在不修改源代码的情况下进行扩展
 
 
-> 扩展阅读：http://www.uml.org.cn/sjms/201211023.asp
+> 其实以上的原则不限于类的设计，很多工程上的系统设计也适用。
 
 
 ## 常用设计模式
@@ -84,7 +85,7 @@ if __name__ == '__main__':
 class Shape(object):
     @classmethod
     def factory(cls, name, *args, **kwargs):
-        types = {c.__name__: c for c in cls.__subclasses__()}
+        types = {c.__name__: c for c in cls.__subclasses__()}  # 忽略性能:P
         shape_class = types[name]
         return shape_class(*args, **kwargs)
 
@@ -191,11 +192,58 @@ if __name__ == '__main__':
 
 #### Decorator
 
-装饰器，似乎不太需要举例了，Python自带的语法，可以用来做很多事情：
+装饰器，似乎不太需要解释，Python自带的语法，可以用来做很多事情，几个简单例子：
+
+*	路由
+
+```
+from flask import Flask
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+	return 'Hello, World'
+
+@app.route('/home')
+def home():
+	return 'Welcome Home'
+```
 
 *   权限控制
-*   logwrap
-*   安全检查
+
+```
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def my_view(request):
+    ...
+```
+
+*   输入输出
+
+```
+from functools import wraps
+
+
+def debug(f):
+	@wraps(f)
+	def debug_function(*args, **kwargs):
+		print('call: ', f.__name__, args, kwargs)
+		ret = f(*args, **kwargs)
+		print('return: ', ret)
+	return debug_function
+
+
+@debug
+def foo(a, b, c=None):
+	print(a, b, c)
+	return True
+
+
+if __name__ == '__main__':
+	foo(1, 2, 3)
+```
+
 
 
 
