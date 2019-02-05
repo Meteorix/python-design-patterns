@@ -1,5 +1,6 @@
 Python Design Patterns
 =======================
+
 如何写出更好的代码——刘欣 2018.6.20
 
 > "Design patterns help you learn from others’ successes instead of your own failures"
@@ -44,7 +45,7 @@ Python Design Patterns
 
 一个类只有一个对象，似乎不太需要解释：）
 
-```
+```python
 class SingletonMeta(type):
 
     instance = None
@@ -81,7 +82,7 @@ if __name__ == '__main__':
 #### Factory
 
 工厂模式，用于生产一大堆对象。这里用``__subclasses__``来获取子类，这样可以动态扩展子类而不改变factory的代码。
-```
+```python
 class Shape(object):
     @classmethod
     def factory(cls, name, *args, **kwargs):
@@ -110,7 +111,7 @@ if __name__ == '__main__':
 
 #### MVC
 可能是最有名的设计模式，``数据<->控制器<->视图``。数据和视图分离，还可以同一份数据渲染多个视图。MVC做的最好的应该是各种Web框架和GUI框架。
-```
+```python
 class Model(object):
     products = {
         'milk': {'price': 1.50, 'quantity': 10},
@@ -167,7 +168,7 @@ if __name__ == '__main__':
 
 #### Proxy
 不直接调用一个类，而是通过一个代理来访问。这样做的好处有：可以切换底层实现、权限控制、安全检查等。当然最有用的是可以实现远程代理，jsonrpc就是一种。
-```
+```python
 class Implementation(object):
     def add(self, x, y):
         return x + y
@@ -194,24 +195,24 @@ if __name__ == '__main__':
 
 装饰器，似乎不太需要解释，Python自带的语法，可以用来做很多事情，几个简单例子：
 
-*	路由
+*   路由
 
-```
+```python
 from flask import Flask
 app = Flask(__name__)
 
 @app.route('/')
 def index():
-	return 'Hello, World'
+    return 'Hello, World'
 
 @app.route('/home')
 def home():
-	return 'Welcome Home'
+    return 'Welcome Home'
 ```
 
 *   权限控制
 
-```
+```python
 from django.contrib.auth.decorators import login_required
 
 @login_required
@@ -221,27 +222,27 @@ def my_view(request):
 
 *   输入输出
 
-```
+```python
 from functools import wraps
 
 
 def debug(f):
-	@wraps(f)
-	def debug_function(*args, **kwargs):
-		print('call: ', f.__name__, args, kwargs)
-		ret = f(*args, **kwargs)
-		print('return: ', ret)
-	return debug_function
+    @wraps(f)
+    def debug_function(*args, **kwargs):
+        print('call: ', f.__name__, args, kwargs)
+        ret = f(*args, **kwargs)
+        print('return: ', ret)
+    return debug_function
 
 
 @debug
 def foo(a, b, c=None):
-	print(a, b, c)
-	return True
+    print(a, b, c)
+    return True
 
 
 if __name__ == '__main__':
-	foo(1, 2, 3)
+    foo(1, 2, 3)
 ```
 
 
@@ -253,7 +254,7 @@ if __name__ == '__main__':
 
 基类作为模板，定义好接口，子类来实现功能，最好的例子就是Qt里的各种QWidget。
 
-```
+```python
 class ApplicateFramework(object):
     def __init__(self):
         self.setup()
@@ -286,10 +287,9 @@ if __name__ == '__main__':
 ```
 
 #### State Machine
-状态机，```当前状态 + 操作 => 下一个状态```，似乎也不用怎么解释。如下例子实现的状态机，可以自定义状态、操作和转换规则
-。扩展的时候无需修改状态机代码，符合**开闭原则**。
+状态机，`当前状态 + 操作 => 下一个状态`，似乎也不用怎么解释。如下例子实现的状态机，可以自定义状态、操作和转换规则。扩展的时候无需修改状态机代码，符合**开闭原则**。
 
-```
+```python
 class StateMachine(object):
 
     def __init__(self, init_state):
@@ -358,7 +358,7 @@ if __name__ == '__main__':
 #### Iterator
 
 迭代器，在Python中也不需要怎么解释，使用起来好像理所应当一样。实际上迭代器的一大优势是无需关心数据类型，一样的``for``语法。另一大优势是无需事先计算好所有元素，而是在迭代到的时候才计算。如下例子是Python中使用`yield`语法产生生成器`generator`来实现的迭代器，优势一目了然。
-```
+```python
 def fibonacci(count=100):
     a, b = 1, 2
     yield a
@@ -376,7 +376,7 @@ for i in fibonacci():
 #### Command
 
 Command封装了一个原子操作，在类外面实现，个人认为最大的作用是实现``redo/undo``。
-```
+```python
 from collections import deque
 
 
@@ -419,7 +419,7 @@ if __name__ == '__main__':
 
 #### Chain Of Responsibility
 链式Handler处理请求，某一个处理成功就返回。用Chain来动态构造Handler序列。
-```
+```python
 class Handler(object):
 
     def __init__(self):
@@ -466,7 +466,7 @@ if __name__ == '__main__':
 
 链式反应，就这样一直点下去。很多Query构造函数是这样，API更好用。
 
-```
+```python
 class Player(object):
     def __init__(self, name):
         self.pos = (0, 0)
@@ -493,7 +493,7 @@ if __name__ == '__main__':
 
 #### Visitor
 Visitor模式的目的是不改变原来的类，用另一个类来实现一些接口。下面的例子用Visitor模式实现了两种节点遍历的方法。
-```
+```python
 class Node(object):
     def __init__(self, name, children=()):
         self.name = name
@@ -529,7 +529,7 @@ if __name__ == '__main__':
 
 #### Observer
 当一个对象发生状态变化时，需要更新其他对象，用观察者模式来解耦这些对象，最小知识原则。
-```
+```python
 class Observable(object):
 
     def __init__(self):
@@ -567,4 +567,4 @@ if __name__ == '__main__':
 *   [python-patterns](https://github.com/faif/python-patterns)
 *   [python-3-patterns-idioms](http://python-3-patterns-idioms-test.readthedocs.io/en/latest/index.html)
 *   [设计模式六大原则](http://www.uml.org.cn/sjms/201211023.asp)
-*	[设计模式一句话总结](https://zhuanlan.zhihu.com/p/28737945)
+*   [设计模式一句话总结](https://zhuanlan.zhihu.com/p/28737945)
